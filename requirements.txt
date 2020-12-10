@@ -1,0 +1,5 @@
+https://download.pytorch.org/whl/cpu/torch-1.5.0%2Bcpu-cp38-cp38-linux_x86_64.whl
+transformers==4.0.0
+sentencepiece>=0.1.94
+protobuf>=3.14.0
+tensorflow>=2.3.1
