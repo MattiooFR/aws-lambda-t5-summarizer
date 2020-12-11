@@ -1,6 +1,7 @@
 import json
 import torch
-from transformers import AutoTokenizer, TFAutoModelWithLMHead
+from transformers import T5Tokenizer, T5ForConditionalGeneration
+
 
 
 def encode(tokenizer, text):
@@ -16,10 +17,10 @@ def decode(tokenizer, summary_ids):
     return tokenizer.decode(summary_ids[0], skip_special_tokens=True)
 
 
-def serverless_pipeline(model_path="./model"):
+def serverless_pipeline(model_path="./t5"):
     """Initializes the model and tokenzier and returns a predict function that ca be used as pipeline"""
-    tokenizer = AutoTokenizer.from_pretrained(model_path)
-    model = TFAutoModelWithLMHead.from_pretrained(model_path)
+    tokenizer = T5Tokenizer.from_pretrained(model_path)
+    model = T5ForConditionalGeneration.from_pretrained(model_path)
 
     def predict(text):
         """predicts the answer on an given question and context. Uses encode and decode method from above"""
@@ -47,7 +48,7 @@ def handler(event, context):
         # loads the incoming event into a dictonary
         body = json.loads(event["body"])
         # uses the pipeline to predict the summary
-        summary = summarizer_pipeline(question=body["text"])
+        summary = summarizer_pipeline(text=body["text"])
         return {
             "statusCode": 200,
             "headers": {
