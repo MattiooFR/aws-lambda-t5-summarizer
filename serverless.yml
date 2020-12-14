@@ -1,62 +1,15 @@
-service: multi-summarizer
-
-app: multi-summarizer-app
-org: duguemathieu
-
-frameworkVersion: '2'
+service: serverless-t5-lambda-docker
 
 provider:
-  name: aws
-  runtime: python3.8
-  region: eu-west-1
-  iamRoleStatements:
-    - Effect: "Allow"
-      Action:
-        - "s3:getObject"
-      Resource: arn:aws:s3:::multi-summarizer/model_tf.h5
-
-custom:
-  pythonRequirements:
-    dockerizePip: true
-    zip: true
-    slim: true
-    strip: false
-    noDeploy:
-      - docutils
-      - jmespath
-      - pip
-      - python-dateutil
-      - setuptools
-      - six
-      - tensorboard
-    useStaticCache: true
-    useDownloadCache: true
-    cacheLocation: './cache'
-package:
-  individually: false
-  exclude:
-    - package.json
-    - package-log.json
-    - node_modules/**
-    - cache/**
-    - test/**
-    - __pycache__/**
-    - .pytest_cache/**
-    - model/pytorch_model.bin
-    - raw/**
-    - .vscode/**
-    - .ipynb_checkpoints/**
+  name: aws # provider
+  region: eu-west-1 # aws region
+  memorySize: 5120 # optional, in MB, default is 1024
+  timeout: 30 # optional, in seconds, default is 6
 
 functions:
-  predict_answer:
-    handler: handler.predict_answer
-    memorySize: 3008
-    timeout: 60
+  questionanswering:
+    image: 402336464871.dkr.ecr.eu-west-1.amazonaws.com/t5-summarizer:latest #ecr url
     events:
       - http:
-          path: ask
-          method: post
-          cors: true
-
-plugins:
-  - serverless-python-requirements
+          path: qa # http path
+          method: post # http method
