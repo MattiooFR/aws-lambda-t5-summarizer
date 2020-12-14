@@ -7,9 +7,9 @@ provider:
   timeout: 30 # optional, in seconds, default is 6
 
 functions:
-  questionanswering:
-    image: 402336464871.dkr.ecr.eu-west-1.amazonaws.com/t5-summarizer:latest #ecr url
+  summarizer:
+    image: 402336464871.dkr.ecr.eu-west-1.amazonaws.com/t5-summarizer@sha256:a15b2c282002ad00db75f38750b77d37658ef7d13d366fbba7a107f80a874f27 #ecr url
     events:
       - http:
-          path: qa # http path
+          path: summarize # http path
           method: post # http method
