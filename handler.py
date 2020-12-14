@@ -6,7 +6,7 @@ from transformers import T5Tokenizer, T5ForConditionalGeneration
 
 def encode(tokenizer, text):
     """encodes the question and context with a given tokenizer"""
-    device = torch.device("cpu")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     preprocess_text = text.strip().replace("\n", "")
     t5_prepared_Text = "summarize: " + preprocess_text
     return tokenizer.encode(t5_prepared_Text, return_tensors="pt").to(device)
