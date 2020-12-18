@@ -4,7 +4,7 @@ provider:
   name: aws # provider
   region: eu-west-1 # aws region
   memorySize: 5120 # optional, in MB, default is 1024
-  timeout: 30 # optional, in seconds, default is 6
+  timeout: 180 # optional, in seconds, default is 6
 
 functions:
   summarizer:
