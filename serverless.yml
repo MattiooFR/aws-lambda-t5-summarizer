@@ -8,8 +8,9 @@ provider:
 
 functions:
   summarizer:
-    image: 402336464871.dkr.ecr.eu-west-1.amazonaws.com/t5-summarizer@sha256:a15b2c282002ad00db75f38750b77d37658ef7d13d366fbba7a107f80a874f27 #ecr url
+    image: 402336464871.dkr.ecr.eu-west-1.amazonaws.com/t5-summarizer@sha256:58dfaf99e5d9f4530833bc2531bfefa02e5c581a902690dfefce2cf534ebfefd #ecr url
     events:
       - http:
           path: summarize # http path
           method: post # http method
+          async: true
