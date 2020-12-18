@@ -9,7 +9,8 @@ def encode(tokenizer, text):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     preprocess_text = text.strip().replace("\n", "")
     t5_prepared_Text = "summarize: " + preprocess_text
-    return tokenizer.encode(t5_prepared_Text, return_tensors="pt").to(device)
+    encoded = tokenizer.encode(t5_prepared_Text, return_tensors="pt").to(device)
+    return encoded
 
 
 def decode(tokenizer, summary_ids):
@@ -33,7 +34,7 @@ def serverless_pipeline(model_path="./t5"):
             no_repeat_ngram_size=2,
             early_stopping=True,
         )
-        output = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
+        output = decode(tokenizer, summary_ids)
         return output
 
     return predict
